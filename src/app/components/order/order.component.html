@@ -1,0 +1,40 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader">
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errMessage">
+    {{errMessage}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="container mt-5" *ngIf="orders.length==0">
+    <p class="text-danger text-center">No Order Found please Place a Order first</p>
+</div>
+
+<div class="container table-responsive my-5" *ngIf="orders.length!=0">
+    <table class="table table-dark table-hover ">
+        <thead>
+            <tr class="text-info">
+                <th scope="col">Order Id</th>
+                <th scope="col">Products Purchased</th>
+                <th scope="col">Address To Be Delivered</th>
+                <th scope="col">Total Cost</th>
+                <th scope="col">Delivery Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let order of orders">
+                <th scope="row" class="text-secondary">{{order.transaction_id}}</th>
+                <td>
+                    <span *ngFor="let product of order.products; let i=index">
+                        {{product.product_name}}<span *ngIf="i!=order.products.length-1">,</span>
+                    </span>
+                </td>
+                <td class="text-secondary">{{order.address}}</td>
+                <td>{{order.amount}} <span class="text-success">Rs</span></td>
+                <td
+                    [ngClass]="{'bg-warning':(order.status.toLowerCase()=='shipped' || order.status.toLowerCase()=='out for delivery'), 'bg-danger':(order.status.toLowerCase()=='received' || order.status.toLowerCase()=='dispatched' || order.status.toLowerCase()=='cancelled'), 'bg-success':(order.status.toLowerCase()=='delivered')}">
+                    {{order.status}}</td>
+            </tr>
+        </tbody>
+    </table>
+</div>

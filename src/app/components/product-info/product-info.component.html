@@ -1,0 +1,41 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader || !product">
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errMessage">
+    {{errMessage}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="container mt-5 mb-5" *ngIf="product">
+    <div class="card text-center">
+        <div class="card-header">
+            <h5 class="card-title">{{product.name}}</h5>
+            <p class="card-text">{{product.description}}</p>
+        </div>
+        <div class="card-body">
+            <img src="../../../assets/eight.png" alt="girl" class="img-fluid">
+            <select class="form-select mt-2" #qan (change)="onChangeQuantity(qan.value)">
+                <option>1</option>
+                <option>2</option>
+                <option>3</option>
+                <option>4</option>
+                <option>5</option>
+            </select>
+            <a class="btn btn-danger mt-2" (click)="addToCart(product._id,product.inStock)"
+                [ngClass]="{disabled:product.addedToCart || (product.inStock<=0)}">Add
+                To Cart</a>
+        </div>
+        <div class="card-footer text-muted">
+            <p>This is a {{product.category}} Category and the Price is {{product.price}} Rs</p>
+            <p>
+                <span *ngIf="(product.inStock>0)">
+                    {{product.inStock}} <span class="text-success">In the Stock</span>
+                </span>
+                <span class="text-danger" *ngIf="(product.inStock<=0)">
+                    Out of Stock
+                </span>
+            </p>
+            <p>{{product.sold}} <span class="text-warning">Sold Out</span> </p>
+        </div>
+    </div>
+</div>

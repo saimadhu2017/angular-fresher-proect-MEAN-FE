@@ -1,0 +1,64 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader">
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errMessage">
+    {{errMessage}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="container mt-3 mb-5">
+    <div class="row justify-content-between">
+        <div class="col-lg-4 mt-lg-2">
+            <div class="card text-center bg-dark text-light mt-lg-5">
+                <div class="card-body ">
+                    <div class="mb-2">
+                        <img class="img-fluid rounded-circle"
+                            src="https://pm1.narvii.com/7620/12bdcc7404e462c49cdb11ab3989719895261a6cr1-1198-1183v2_hq.jpg"
+                            alt="Profile Pic" width="150" height="150">
+                    </div>
+                    <i class="bi bi-pencil-square text-secondary" appMouseHover [routerLink]="['/edit/profile']"></i>
+                    <h5 class="card-title">{{user.name | uppercase}}</h5>
+                    <p class="card-text">{{user.email}}</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-lg-8 mt-3 mt-lg-0">
+            <div class="row">
+                <h1 class="col-10 text-center">Purchased Products</h1>
+                <a class="col btn btn-danger d-flex align-items-center mb-2" [routerLink]='["/order"]' routerLinkActive="active">
+                    Orders Placed
+                </a>
+            </div>
+            <div class="table-responsive" *ngIf="user.purchases.length!=0">
+                <table class="table table-dark table-hover ">
+                    <thead>
+                        <tr class="text-info">
+                            <th scope="col">Item No</th>
+                            <th scope="col">Product Name</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Quantity</th>
+                            <th scope="col">Cost</th>
+                            <th scope="col">Transaction Id</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let purchases of user.purchases; let index=index">
+                            <th scope="row" class="text-secondary">{{index+1}}</th>
+                            <td>{{purchases.name}}</td>
+                            <td class="text-secondary">{{purchases.description}}</td>
+                            <td class="text-warning">{{purchases.quantity}}</td>
+                            <td>{{purchases.amount}} <span class="text-success">Rs</span></td>
+                            <td class="text-danger">{{purchases.transaction_id}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div *ngIf="user.purchases.length==0">
+                <div class="text-danger text-center mt-5">
+                    No Products are Purchased
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

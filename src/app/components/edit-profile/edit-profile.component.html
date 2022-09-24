@@ -1,0 +1,58 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader">
+</div>
+<div class="container mt-5 mb-5 w-50 text-white">
+    <div class="card bg-dark">
+        <div class="display-6 text-center">
+            Edit Your details
+        </div>
+        <div class="card-body">
+            <form class="mb-3" [formGroup]="updateUserForm" (ngSubmit)="onSave('name')">
+                <div class="input-group">
+                    <input class="form-control" type="text" required formControlName="name"
+                        placeholder="Enter new Name">
+                    <button class="btn btn-success" [disabled]="!updateUserForm.controls.name.valid">Save</button>
+                </div>
+                <div class="alert alert-danger"
+                    *ngIf="updateUserForm.controls.name.errors && updateUserForm.controls.name.touched">
+                    Enter Name and Minimum 3 Characters
+                </div>
+            </form>
+            <!-- Email -->
+            <form class="mb-3" [formGroup]="updateUserForm" (ngSubmit)="onSave('email')">
+                <div class="input-group">
+                    <input class="form-control" type="email" required formControlName="email"
+                        placeholder="Enter new Email">
+                    <button class="btn btn-success" [disabled]="!updateUserForm.controls.email.valid">Save</button>
+                </div>
+                <div class="alert alert-danger"
+                    *ngIf="updateUserForm.controls.email.errors && updateUserForm.controls.email.touched">
+                    Enter Email Id with Valid Format
+                </div>
+            </form>
+            <!-- Password and Retype password -->
+            <form [formGroup]="updateUserForm" (ngSubmit)="onSave('password')">
+                <div class="mb-3">
+                    <label class="form-label">New Password:</label>
+                    <input class="form-control" type="password" required formControlName="password">
+                    <div class="alert alert-danger"
+                        *ngIf="updateUserForm.controls.password.errors && updateUserForm.controls.password.touched">
+                        Please Enter Password
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Re-type New Password:</label>
+                    <input class="form-control" type="password" required formControlName="retype_password">
+                    <div class="alert alert-danger"
+                        *ngIf="updateUserForm.controls.retype_password.errors && updateUserForm.controls.retype_password.touched">
+                        Please Enter Password which should be same
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success"
+                        [disabled]="!(updateUserForm.controls.password.valid && updateUserForm.controls.retype_password.valid)">Update
+                        Password</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader">
+    <span class="visually-hidden">Loading...</span>
+</div>
+<div class="container mt-5 w-50 text-white">
+    <div class="card bg-dark">
+        <div class="display-6 text-center">
+            Sign In
+        </div>
+        <div class="card-body">
+            <form [formGroup]="signInForm" (ngSubmit)="onSignIn()">
+                <div class="mb-3">
+                    <label class="form-label">Email:</label>
+                    <input class="form-control" type="text" required formControlName="email">
+                    <div class="alert alert-danger"
+                        *ngIf="signInForm.controls.email.errors && signInForm.controls.email.touched">
+                        Enter Email Id with Valid Format
+                    </div>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Password:</label>
+                    <input class="form-control" type="password" required formControlName="password">
+                    <div class="alert alert-danger"
+                        *ngIf="signInForm.controls.password.errors && signInForm.controls.password.touched">
+                        Please Enter the Password
+                    </div>
+                </div>
+                <div class="d-flex justify-content-center">
+                    <button class="btn btn-success" type="submit" [disabled]="!signInForm.valid">
+                        Login
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

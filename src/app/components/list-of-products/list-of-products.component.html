@@ -1,0 +1,76 @@
+<div class="spinner-border text-success" role="status" *ngIf="loader">
+</div>
+
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="errMessage">
+    {{errMessage}}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="container mt-4 text-center w-50">
+    <form class="input-group" [formGroup]="searchForm" (ngSubmit)="productSearch()">
+        <input type="search" class="form-control rounded border border-dark" placeholder="Search By Product Name"
+            aria-label="Search" aria-describedby="search-addon" required formControlName="search" />
+        <button type="submit" class="btn btn-success" [disabled]="!searchForm.valid">
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search"
+                viewBox="0 0 16 16">
+                <path
+                    d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
+            </svg>
+        </button>
+    </form>
+</div>
+<div class="alert alert-danger container text-center w-50"
+    *ngIf="searchForm.controls.search.errors && searchForm.controls.search.touched">
+    Enter Product Name which is of Minimum 3 Characters
+</div>
+
+<div class="container mt-1 mb-5 text-light">
+    <div *ngFor="let i of products | searchByProduct:searchForm.controls.search.value:searchForm.valid">
+        <div class="row row-cols-3 mt-3 p-3 bg-dark">
+            <div class="col-lg-2 col-12">
+                <img src="../../../assets/eight.png" alt="girl" class="img-fluid pt-md-3">
+            </div>
+            <div class=" col-lg-8 col-12">
+                <div class="row row-cols-2 gy-4">
+                    <div class="col display-6">{{i.name}}</div>
+                    <div class="col">
+                        <span *ngIf="(i.inStock>0)">
+                            {{i.inStock}} <span class="text-success">In Stock</span>
+                        </span>
+                        <span class="text-danger" *ngIf="(i.inStock<=0)">
+                            Out of Stock
+                        </span>
+                    </div>
+                    <div class="col">{{i.description}}</div>
+                    <div class="col">{{i.sold}} <span class="text-danger">Sold Out</span></div>
+                    <div class="col">{{i.price}} <span class="text-success">Rs</span></div>
+                </div>
+                <div class="row">
+                    <div class="col-12 gy-4 text-warning"><a [routerLink]='["/product",i._id]'>More Info
+                            Click
+                            Here</a></div>
+                </div>
+            </div>
+            <div class="col-lg-2 col-12">
+                <div class="row">
+                    <div class="col-12 gy-3">
+                        <select #qan class="form-select" (change)="onChangeQuantity(qan.value)">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-12 gy-4 d-grid">
+                        <a class="btn btn-danger mt-2" (click)="addToCart(i._id,i.inStock)"
+                            [ngClass]="{disabled:i.addedToCart || (i.inStock<=0)}">Add To
+                            Cart</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
